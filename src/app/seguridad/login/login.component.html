@@ -1,0 +1,29 @@
+<section class="login-container">
+  <!-- Lado Izquierdo -->
+  <div class="login-left">
+    
+    <!-- Círculo con Logo -->
+    <div class="logo-container">
+      <img src="logoUM.png" alt="Logo" class="logo" />
+    </div>
+  
+    <!-- Título -->
+    <h2 class="login-title">Inicia sesión</h2>
+
+    <!-- Botón con clase personalizada -->
+    <button 
+      mat-raised-button 
+      class="login-button"
+      [disabled]="cargando" 
+      (click)="login()">
+      <mat-icon>mail</mat-icon>
+      INGRESA CON MICROSOFT
+    </button>
+
+  </div>
+  
+    <!-- Lado Derecho: Imagen de Fondo -->
+  <div class="login-right">
+    <img src="calendario.jpg" alt="Calendario" class="background-image" />
+  </div>
+</section>

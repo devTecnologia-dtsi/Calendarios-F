@@ -1,0 +1,31 @@
+.form-card {
+  margin-bottom: 16px;
+  padding: 16px;
+  max-width: 700px; 
+  width: 100%;
+}
+
+.form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.actividad-card {
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.subactividad-card {
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 16px;
+}

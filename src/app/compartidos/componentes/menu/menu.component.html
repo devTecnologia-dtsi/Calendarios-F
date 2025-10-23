@@ -1,0 +1,32 @@
+<mat-toolbar color="primary" class="menu-bar">
+  <!-- Sección izquierda -->
+  <span>
+    <a routerLink="/dashboard" mat-button>
+      <mat-icon>calendar_month</mat-icon>
+      Calendarios
+    </a>
+  </span>
+
+  <!-- Sección de administración, solo visible para admin -->
+  <ng-container *ngIf="esAdmin()">
+    <a routerLink="/rol" mat-button>
+      <mat-icon>groups</mat-icon> Roles
+    </a>
+
+    <a routerLink="/usuarios" mat-button>
+      <mat-icon>person</mat-icon> Usuarios
+    </a>
+
+    <a routerLink="/logs" mat-button>
+      <mat-icon>list_alt</mat-icon> Logs
+    </a>
+  </ng-container>
+
+  <!-- Espaciador -->
+  <span class="spacer"></span>
+
+  <!-- Cerrar sesión -->
+  <button mat-button color="warn" (click)="cerrarSesion()">
+    <mat-icon>logout</mat-icon> Cerrar sesión
+  </button>
+</mat-toolbar>
