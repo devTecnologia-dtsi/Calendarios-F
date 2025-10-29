@@ -15,6 +15,6 @@ RUN if [ "${NODE_ENV}" = "DEV" ] ; then \
     fi
 
 FROM nginx:stable-alpine
-ARG BUILD_PATH
+ARG BUILD_PATH=/app/dist/production/calendarios
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build "${BUILD_PATH}" /usr/share/nginx/html
