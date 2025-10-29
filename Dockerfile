@@ -4,8 +4,17 @@ COPY package*.json ./
 RUN npm ci
 RUN npm install -g @angular/cli
 COPY . .
-RUN ng build --configuration=production
+ARG NODE_ENV=production
+ARG BUILD_PATH=/app/dist/production/calendarios
+RUN if [ "${NODE_ENV}" = "DEV" ] ; then \
+    ng build --configuration=development ; \
+    elif [ "${NODE_ENV}" = "QA" ] ; then \
+    ng build --configuration=qa ; \
+    else \
+    ng build --configuration=production ; \
+    fi
 
 FROM nginx:stable-alpine
+ARG BUILD_PATH
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist/calendario-front /usr/share/nginx/html
+COPY --from=build "${BUILD_PATH}" /usr/share/nginx/html

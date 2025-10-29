@@ -46,7 +46,36 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.ts"
+                }
+              ],
+              "outputPath": "dist/production/calendarios"
+            },
+            "qa": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "5MB",
+                  "maximumError": "5MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
+                }
+              ],
+              "outputPath": "dist/qa/calendarios"
             },
             "development": {
               "optimization": false,
@@ -57,7 +86,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.development.ts"
                 }
-              ]
+              ],
+              "outputPath": "dist/development/calendarios"
             }
           },
           "defaultConfiguration": "production"
@@ -67,6 +97,9 @@
           "configurations": {
             "production": {
               "buildTarget": "calendario-front:build:production"
+            },
+            "qa": {
+              "buildTarget": "calendario-front:build:qa"
             },
             "development": {
               "buildTarget": "calendario-front:build:development"

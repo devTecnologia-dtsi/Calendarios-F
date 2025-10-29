@@ -1,13 +1,14 @@
 export const environment = {
-    production: true,
+    production: false,
     // URL base del backend de la aplicación
-    apiUrl: 'https://calendarios.uniminuto.edu/api/',
+    apiUrl: 'https://testcalendarios.uniminuto.edu/api/',
 
     // URL de redirección del frontend (app Angular)
-    baseUrl: 'https://calendarios.uniminuto.edu',
+    baseUrl: 'https://testcalendarios.uniminuto.edu',
 
     // Configuración de MSAL para autenticación con Azure AD
-    clientId: 'a01195af-ceac-41e3-8a2c-1274b0181b1f',
+    clientId: '0ffbc27e-5a3a-4b6b-bcd3-8f06486ecf03',
+    // clientId: 'd72569ba-95a4-4dd7-b0d2-f9d6d4d6a223',
     authority: 'https://login.microsoftonline.com/b1ba85eb-a253-4467-9ee8-d4f8ed4df300',
     redirectUri: 'https://testcalendarios.uniminuto.edu/login'
 };
