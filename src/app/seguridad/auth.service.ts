@@ -9,7 +9,6 @@ import { NotificacionService } from '../compartidos/servicios/notificacion.servi
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-
   // URL del endpoint de inicio de sesión
   private readonly loginEndpoint = `${environment.apiUrl}usuarioPorCorreo`;
 
@@ -23,7 +22,9 @@ export class AuthService {
     // Verifica si el usuario ya está autenticado al cargar la aplicación
     const token = this.getToken();
     if (token) {
-      this.msal.instance.setActiveAccount(this.msal.instance.getAllAccounts()[0]);
+      this.msal.instance.setActiveAccount(
+        this.msal.instance.getAllAccounts()[0]
+      );
     }
   }
 
@@ -31,7 +32,6 @@ export class AuthService {
     const raw = localStorage.getItem('usuario_info');
     return raw ? JSON.parse(raw) : [];
   }
-
 
   get activeAccount(): AccountInfo | null {
     return this.msal.instance.getActiveAccount();
@@ -45,16 +45,17 @@ export class AuthService {
   }
 
   async cargarPermisosRoles(): Promise<void> {
-    const roles = await firstValueFrom(this.http.get<any>(`${environment.apiUrl}rol`));
+    const roles = await firstValueFrom(
+      this.http.get<any>(`${environment.apiUrl}rol`)
+    );
     localStorage.setItem('permisos_roles', JSON.stringify(roles.data));
   }
 
   cerrarSesion(): void {
     localStorage.clear();
     this.msal.logoutRedirect({
-      postLogoutRedirectUri: `${window.location.origin}/login`
+      postLogoutRedirectUri: `${window.location.origin}/login`,
     });
-
   }
 
   async validarConBackend(): Promise<boolean> {
@@ -69,7 +70,10 @@ export class AuthService {
       if (respuesta?.token) {
         try {
           localStorage.setItem('jwt_token', respuesta.token);
-          localStorage.setItem('usuario_info', JSON.stringify([respuesta.usuario]));
+          localStorage.setItem(
+            'usuario_info',
+            JSON.stringify([respuesta.usuario])
+          );
         } catch (e) {
           // console.error('Error guardando en localStorage:', e);
           return false;
@@ -105,7 +109,11 @@ export class AuthService {
   }
 
   getRoles(): number[] {
-    return [...new Set(this.getUsuarioRaw().map((u) => u.id_rol))];
+    return [
+      ...new Set(
+        this.getUsuarioRaw().map(({ permisos }) => permisos[0].id_rol)
+      ),
+    ];
   }
 
   getIdUsuario(): number | null {
@@ -115,16 +123,23 @@ export class AuthService {
   }
 
   getSedesUnicas(): number[] {
-    const usuario = JSON.parse(localStorage.getItem('usuario_info') || '[]') as { id_sede: number }[];
+    const usuario = JSON.parse(
+      localStorage.getItem('usuario_info') || '[]'
+    ) as { id_sede: number }[];
     return [...new Set(usuario.map((p: any) => p.id_sede))];
   }
 
   getRectoriasUnicas(): number[] {
-    const usuario = JSON.parse(localStorage.getItem('usuario_info') || '[]') as { id_rectoria: number }[];
+    const usuario = JSON.parse(
+      localStorage.getItem('usuario_info') || '[]'
+    ) as { id_rectoria: number }[];
     return [...new Set(usuario.map((p: any) => p.id_rectoria))];
   }
 
-  tienePermisoPara(tipo: 'academico' | 'financiero' | 'grados', permiso: 'crear' | 'leer' | 'actualizar' | 'borrar'): boolean {
+  tienePermisoPara(
+    tipo: 'academico' | 'financiero' | 'grados',
+    permiso: 'crear' | 'leer' | 'actualizar' | 'borrar'
+  ): boolean {
     const rolesUsuario = this.getRoles(); // viene del token (id_rol[])
     const permisos = JSON.parse(localStorage.getItem('permisos_roles') || '[]');
 
@@ -132,13 +147,14 @@ export class AuthService {
     const rolEsperado: Record<string, string> = {
       academico: 'academicos',
       financiero: 'financiero',
-      grados: 'grados'
+      grados: 'grados',
     };
 
-    return permisos.some((p: { id: number; nombre: string; [key: string]: any }) =>
-      rolesUsuario.includes(p.id) &&
-      p.nombre === rolEsperado[tipo] &&
-      p[permiso] === 1
+    return permisos.some(
+      (p: { id: number; nombre: string; [key: string]: any }) =>
+        rolesUsuario.includes(p.id) &&
+        p.nombre === rolEsperado[tipo] &&
+        p[permiso] === 1
     );
   }
 
@@ -157,18 +173,18 @@ export class AuthService {
 
         if (!respuesta || !respuesta.token || !respuesta.usuario) {
           // console.warn('Sesión inválida detectada. Cerrando sesión.');
-          this.notificacionService.mostrarError('Sesión inválida. Por favor, inicia sesión nuevamente.');
+          this.notificacionService.mostrarError(
+            'Sesión inválida. Por favor, inicia sesión nuevamente.'
+          );
           this.cerrarSesion();
         }
 
         localStorage.setItem('usuario_info', JSON.stringify(respuesta.usuario));
         localStorage.setItem('jwt_token', respuesta.token); // Opcional si cambia
-
       } catch (error) {
         console.error('Error al validar sesión periódica:', error);
         this.cerrarSesion();
       }
     }, 20 * 60 * 1000); // Cada 20 minutos
   }
-
 }
