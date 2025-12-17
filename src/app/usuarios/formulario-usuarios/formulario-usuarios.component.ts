@@ -56,7 +56,7 @@ export class FormularioUsuariosComponent implements OnInit {
   private rectoriaService = inject(RectoriaService);
   private sedeService = inject(SedeService);
   private rolService = inject(RolService);
-  
+
 
   // Formularios y listas de datos
   form = this.formbuilder.group({
@@ -71,7 +71,7 @@ export class FormularioUsuariosComponent implements OnInit {
   sedes: SedeDTO[] = [];
   roles: RolDTO[] = [];
 
-  
+
   // Inicialización
   ngOnInit(): void {
     this.cargarDatosIniciales();

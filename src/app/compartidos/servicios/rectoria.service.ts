@@ -13,9 +13,9 @@ export interface RespuestaAPI {
 }
 
 export interface Rectoria {
-  id: number;
+  id_rectoria: number;
   codigo: string;
-  nombre: string;
+  nombre_rectoria: string;
 }
 
 @Injectable({
@@ -25,7 +25,7 @@ export class RectoriaService {
 
   private http = inject(HttpClient);
   private urlBase = environment.apiUrl + 'rectoria/';
-  
+
   listarRectorias(): Observable<RespuestaAPI> {
     return this.http.get<RespuestaAPI>(`${this.urlBase}`).pipe(
       catchError(this.handleError)
