@@ -24,7 +24,7 @@ export class MenuComponent {
   private router = inject(Router);
 
   esAdmin(): boolean {
-    return this.authService.getRoles().includes(1); // id_rol = 1 es admin
+    return this.authService.getRoles().includes(1);
   }
 
   cerrarSesion(): void {
