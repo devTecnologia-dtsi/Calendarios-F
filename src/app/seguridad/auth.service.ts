@@ -14,7 +14,7 @@ export class AuthService {
   private readonly loginEndpoint = `${environment.apiUrl}usuarioPorCorreo`;
 
   // Inyección de dependencias
-  private msal = inject(MsalService); 
+  private msal = inject(MsalService);
   private http = inject(HttpClient);
   private router = inject(Router);
   private notificacionService = inject(NotificacionService);
@@ -69,7 +69,7 @@ export class AuthService {
       if (respuesta?.token) {
         try {
           localStorage.setItem('jwt_token', respuesta.token);
-          localStorage.setItem('usuario_info', JSON.stringify(respuesta.usuario));
+          localStorage.setItem('usuario_info', JSON.stringify([respuesta.usuario]));
         } catch (e) {
           // console.error('Error guardando en localStorage:', e);
           return false;
